@@ -1,0 +1,239 @@
+<apex:page standardController="AcctSeed__Billing__c" renderAs="pdf" showHeader="false">
+
+<head>
+  <style>
+    @page {
+      @bottom-center {
+          content: "Page " counter(page)  " of " counter(pages);
+         }
+    }
+  </style> 
+</head>
+
+
+    <!-- Use Style Sheet -->   
+    <apex:stylesheet value="{!URLFOR($Resource.styles, 'styles.css')}" />
+
+    <!-- Logo and Document Name -->   
+        
+    <table>
+        <tr style="font-size: 36px;font-weight: bold;text-transform: uppercase">
+            <td width="100%"><apex:image id="theImage" value="{!$Resource.StatusGOLogo}" width="194" height="41"/></td>
+            <td width="100%" align="right" valign="middle"><apex:outputtext value="INVOICE" style="docTitle"/></td>
+        </tr>
+    </table> 
+
+            
+    <!-- Company Info -->
+
+    <table>
+        <tr>
+            <td width="100%" align="left" valign="middle"><apex:outputtext value="562 Championship Drive"/></td>
+        </tr>    
+        <tr>
+            <td width="100%" align="left" valign="middle"><apex:outputtext value="Harleysville PA 19438"/></td>
+        </tr>
+        <tr>            
+            <td width="100%" align="left" valign="middle"><apex:outputtext value="Toll Free: (855) WE GO NOW"/></td>
+        </tr>
+        <tr>            
+            <td width="100%" align="left" valign="middle"><apex:outputtext value="Web: www.statusgonow.com"/></td>
+        </tr>
+    </table>   
+    
+    <br/>
+    
+    <!-- Bill To -->   
+    <table>
+        <tr>
+            <td style="font-weight: bold;text-decoration: underline;" align="left" valign="middle"><apex:outputtext value="BILL TO:"/></td>        
+        </tr>
+    
+        <tr>
+            <td style="width:550px" align="left" valign="middle"><apex:outputtext value="{!AcctSeed__Billing__c.AcctSeed__Customer__r.Name}"/></td>
+            <td style="font-weight: bold;width: 200px;" align="right" valign="middle"><apex:outputtext value="Invoice Number: "/></td>
+            <td style="width:10px" align="left" valign="middle"><apex:outputtext value=" "/></td>
+            <td style="width:200px" align="left" valign="middle"><apex:outputtext value="{!AcctSeed__Billing__c.Name}"/></td>            
+        </tr>    
+
+        <tr>
+            <td style="width:550px" align="left" valign="middle"><apex:outputtext value="{!AcctSeed__Billing__c.AcctSeed__Customer__r.BillingStreet}"/></td>
+            <td style="font-weight: bold;width: 200px;" align="right" valign="middle"><apex:outputtext value="Billing Date: "/></td>            
+            <td style="width:10px" align="left" valign="middle"><apex:outputtext value=" "/></td>
+            <td style="width:200px" align="left" valign="middle">
+                <apex:outputtext value="{0,date,MM/dd/yyyy}">
+                    <apex:param value="{!AcctSeed__Billing__c.AcctSeed__Date__c}"/>
+                </apex:outputtext>
+            </td>            
+        </tr>    
+        
+        <tr>
+            <td style="width:550px" align="left" valign="middle"><apex:outputtext value="{!AcctSeed__Billing__c.AcctSeed__Customer__r.BillingCity}, {!AcctSeed__Billing__c.AcctSeed__Customer__r.BillingState} {!AcctSeed__Billing__c.AcctSeed__Customer__r.BillingPostalCode}"/></td>
+            <td style="font-weight: bold;width: 200px;" align="right" valign="middle"><apex:outputtext value="Payment Terms: "/></td>
+            <td style="width:10px" align="left" valign="middle"><apex:outputtext value=" "/></td>
+            <td style="width:200px" align="left" valign="middle"><apex:outputtext value="{!AcctSeed__Billing__c.AcctSeed__Billing_Terms_Name__c}"/></td>            
+        </tr>            
+
+        <tr>
+            <td style="width:550px" align="left" valign="middle"><apex:outputtext value="{!AcctSeed__Billing__c.AcctSeed__Customer__r.BillingCountry}"/></td>
+            <td style="font-weight: bold;width: 200px;" align="right" valign="middle"><apex:outputtext value="Due Date: "/></td>
+            <td style="width:10px" align="left" valign="middle"><apex:outputtext value=" "/></td>
+            <td style="width:200px" align="left" valign="middle">
+                <apex:outputtext value="{0,date,MM/dd/yyyy}">
+                    <apex:param value="{!AcctSeed__Billing__c.AcctSeed__Due_Date2__c}"/>
+                </apex:outputtext>
+            </td>            
+        </tr>    
+
+        <tr>
+            <td style="width:550px" align="left" valign="middle"><apex:outputtext value=""/></td>
+            <td style="font-weight: bold;width: 200px;" align="right" valign="middle"><apex:outputtext value="Billing Cycle: "/></td>
+            <td style="width:10px" align="left" valign="middle"><apex:outputtext value=" "/></td>            
+            <td style="width:200px" align="left" valign="middle"><apex:outputtext value="{!AcctSeed__Billing__c.AcctSeed__Billing_Cycle_Start_Date__c} - {!AcctSeed__Billing__c.AcctSeed__Billing_Cycle_End_Date__c}"/></td>            
+        </tr>    
+
+        <tr>
+            <td style="width:550px" align="left" valign="middle"><apex:outputtext value="Attn: {!AcctSeed__Billing__c.AcctSeed__Billing_Contact__r.Name}"/></td>
+            <td style="font-weight: bold;width: 200px;" align="right" valign="middle"><apex:outputtext value="Invoice Total: "/></td>
+            <td style="width:10px" align="left" valign="middle"><apex:outputtext value=" "/></td>
+            <td style="width:200px" align="left" valign="middle">
+                <apex:outputText value="{0,number,currency}">
+                    <apex:param value="{!AcctSeed__Billing__c.AcctSeed__Total__c}"/>
+                </apex:outputText>
+            </td>            
+        </tr>    
+
+    </table>       
+
+<br/>
+
+<!-- Billing Lines -->
+
+<table >
+
+        <tr class="tablehead">
+
+            <th width="67%" style="text-align:left">Description</th>
+            <th width="7%">Qty</th>
+            <th width="13%">Fee</th>
+            <th width="13%">Extended</th>
+
+        </tr>
+
+        <apex:repeat var="bill" value="{!AcctSeed__Billing__c.AcctSeed__Project_Billing_Lines__r}">
+
+        <tr class="odd">
+
+            <td>
+                <apex:outputText value="{!bill.AcctSeed__Product__r.Name}"/><br/>
+                <apex:outputText value="{!bill.AcctSeed__Comment__c}"/>                      
+            </td>
+
+            <td style="text-align:center">
+                <apex:outputText value="{0,number,0}">
+                    <apex:param value="{!bill.AcctSeed__Hours_Units__c}"/>
+                </apex:outputText>             
+            </td>
+
+            <td style="text-align:center">
+                <apex:outputText value="{0,number,currency}">
+                    <apex:param value="{!bill.AcctSeed__Rate__c}"/>
+                </apex:outputText>              
+            </td>
+
+            <td style="text-align:center">
+                <apex:outputText value="{0,number,currency}">
+                    <apex:param value="{!bill.AcctSeed__Total__c}"/>
+                </apex:outputText> 
+            </td>
+
+        </tr>
+
+        </apex:repeat> 
+
+    </table>
+    
+    <!--
+ 
+    
+    <br/><br/>
+    
+    
+
+    <apex:dataTable value="{!AcctSeed__Billing__c.AcctSeed__Project_Billing_Lines__r}" var="bl" id="blTable" captionClass="caption" headerClass="tablehead" rowClasses="odd,even"  columnsWidth="10, 65, 5, 10, 10">
+
+              <apex:column > 
+                  <apex:facet name="header">Date</apex:facet>   
+                  <apex:outputText value="{0,date,MM/dd/yyyy}"><apex:param value="{!bl.AcctSeed__Date__c}"/></apex:outputText>
+              </apex:column>
+
+              <apex:column > 
+                  <apex:facet name="header">Description</apex:facet>
+                  <apex:outputText value="{!bl.AcctSeed__Product__r.Name}"/><br/>
+                  <apex:outputText value="{!bl.AcctSeed__Comment__c}"/>                  
+              </apex:column>
+              
+              <apex:column > 
+                <apex:facet name="header">Qty</apex:facet>
+                <apex:outputText value="{0,number,0}">
+                    <apex:param value="{!bl.AcctSeed__Hours_Units__c}"/>
+                </apex:outputText>    
+              </apex:column>
+
+              <apex:column > 
+                <apex:facet name="header">Fee</apex:facet>
+                <apex:outputText value="{0,number,currency}">
+                    <apex:param value="{!bl.AcctSeed__Rate__c}"/>
+                </apex:outputText>    
+              </apex:column>
+
+              <apex:column > 
+                  <apex:facet name="header">Extended</apex:facet>
+                <apex:outputText value="{0,number,currency}">
+                    <apex:param value="{!bl.AcctSeed__Total__c}"/>
+                </apex:outputText>              
+              </apex:column>
+                                                        
+  </apex:dataTable>
+  -->
+<br/>
+
+<!-- Work Logs -->
+<!--
+    <apex:outputtext styleClass="tablecaptions" value="WORK LOG"/>
+    
+    <apex:dataTable value="{!AcctSeed__Billing__c.Work_Logs__r}" var="wl" id="wlTable" captionClass="caption" headerClass="tablehead" rowClasses="odd,even" style="font-size: 50%; " columnsWidth="170px, 75px, 110px, 500px">
+                
+              <apex:column style="border: 1px"> 
+                  <apex:facet name="header">Date Time Started</apex:facet>   
+                  <apex:outputText value="{0,date,MM/dd/yyyy h:mm a}"><apex:param value="{!wl.Date_Time_Started__c}"/></apex:outputText>
+              </apex:column>
+
+              <apex:column style="border: 1px"> 
+                  <apex:facet name="header">Hours</apex:facet>
+                  <apex:outputText value="{!wl.Time_Spent__c}"/>
+              </apex:column>
+              
+              <apex:column style="border: 1px"> 
+                  <apex:facet name="header">Resource</apex:facet>
+                  <apex:outputText value="{!wl.Consultant__r.Name}"/>
+              </apex:column>
+              
+              <apex:column style="border: 1px"> 
+                  <apex:facet name="header">Description</apex:facet>
+                  <apex:outputText escape="false" value="{!wl.Work_Description__c}"/>
+              </apex:column>                            
+
+  </apex:dataTable>
+-->  
+    <br/>
+    <br/>    
+
+    <!-- Thank you for your business! 
+    <center>
+        <apex:outputtext styleClass="thankyou" value="Thank you for your business!"/>
+    </center>   
+    -->   
+   
+  
+</apex:page>

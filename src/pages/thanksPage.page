@@ -1,0 +1,14 @@
+<apex:page controller="StatusGoDreamforceController" Showheader="false">
+  <apex:form >
+   <apex:outputPanel >
+    <center>
+    <apex:image value="{!$Resource.StatusGoDreamforceLogo}" width="600" height="142" /><br/><br/>
+      <apex:outputPanel style="font-size:18px;font-family:Arial;"><b>THANK YOU.</b> We have emailed the guide to: {!leadobj.email}</apex:outputPanel><br/><br/><br/><br/>
+    </center>
+        </apex:outputPanel>
+      <apex:outputLabel style="font-size:16px;font-family:Arial;">
+      <center> Please feel free to contact us at&nbsp;<apex:outputLink value="mailto:tipsandwisdom@statusgonow.com">tipsandwisdom@statusgonow.com</apex:outputLink> or <br/>
+        (855) 934-6669 if you have any questions or would like additional information.
+      </center></apex:outputLabel>
+    </apex:form>
+</apex:page>

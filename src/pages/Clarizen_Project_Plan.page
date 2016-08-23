@@ -1,0 +1,8 @@
+<apex:page standardController="Project_Status_Meeting__c">
+
+
+<apex:iframe src="{!Project_Status_Meeting__c.Link_to_Clarizen_Project_Plan__c}" scrolling="true" id="theIframe"/>
+
+
+
+</apex:page>

@@ -1,0 +1,4 @@
+<!--OpptyEnhancedNoteEmailTemplatePage-->
+<apex:page controller="OpptyEnhanceNoteExtn" contentType="text/html">
+    
+</apex:page>

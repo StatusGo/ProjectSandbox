@@ -1,0 +1,135 @@
+<apex:page controller="StatusGoDreamforceController" showHeader="false">
+    <apex:form >
+        <table align="center">
+            <tr>
+                <td>    
+                <img id="theImage" src="{!$Resource.StatusGoDreamforceLogo}" width="600" height="142"/>
+                 
+                </td>
+            </tr>
+        </table>
+         <table  align="center">
+            <tr>
+                <td>    
+                    <apex:outputPanel style="font-size:20px;font-family:Arial;"> <b>START NOW.</b> 
+                    </apex:outputPanel>
+                </td>
+            </tr>
+        </table>
+        <table align="center" >
+            <tr>
+                <td>    
+                <apex:outputPanel style="font-size:15px;font-family:Arial;"> <b>A Salesforce guide
+        for healthcare providers:
+        </b> 
+        </apex:outputPanel><br/> 
+                </td>
+            </tr>
+            <tr>
+                <td>    
+                <apex:outputLabel style="font-size:16px;font-family:Arial;">
+                    "Tips and Wisdom from the early successes     
+                </apex:outputLabel>
+                </td>
+            </tr>
+            <tr>
+                <td >   
+                <apex:outputLabel style="font-size:16px;font-family:Arial;margin-left:20px;">
+                        of a top Salesforce healthcare provider   
+                </apex:outputLabel>
+                </td>
+            </tr>
+            <tr>
+                <td >   
+                <apex:outputLabel style="font-size:16px;font-family:Arial;margin-left:80px;">
+                    implementation partner."  
+                </apex:outputLabel>
+                </td>
+            </tr>
+            <tr>
+             <td>    
+                <p style="font-size:20px;font-family:Arial;margin-left:-90px;"> <b>Get your FREE guide:</b> </p>
+            </td>
+            </tr>
+        </table> 
+        <center>
+        
+         
+        <table align="center">
+        <td>
+            
+        </td>
+        <tr><td>
+              <apex:panelGrid columns="1" >
+               <apex:pageMessages ></apex:pageMessages>
+              <apex:outputPanel >
+             <apex:panelGrid columns="2" style="width:100%;">
+              <apex:outputPanel >
+                      <apex:panelGrid columns="1" >
+                          <apex:outputLabel value="First Name*" style="font-family:Arial;font-size:12px;"/>
+                          <apex:inputField value="{!leadobj.FirstName}" style="font-family:Arial;padding:3px;width:145%;" />
+                      </apex:panelGrid>
+                 </apex:outputPanel>
+                   <apex:outputPanel >
+                      <apex:panelGrid columns="1">
+                          <apex:outputLabel value="Last Name*" style="font-family:Arial;"/>
+                          <apex:inputField value="{!leadobj.LastName}" required="false" style="font-family:Arial;padding:3px; width:140%;"/>
+                  </apex:panelGrid>
+             </apex:outputPanel>
+             </apex:panelGrid>
+              </apex:outputPanel>
+             <apex:outputPanel >
+                  <apex:panelGrid columns="1">
+                      <apex:outputLabel value="Company Name*" style="font-family:Arial;"/>
+                      <apex:inputField value="{!leadobj.company}" style="width:300%;padding:3px;" required="false"/>
+                  </apex:panelGrid>
+             </apex:outputPanel>  
+               
+               <apex:outputPanel >
+                  <apex:panelGrid columns="1">
+                      <apex:outputLabel value="Email Address*" style="font-family:Arial;"/>
+                      <apex:inputField value="{!leadobj.Email}" style="width:300%;padding:3px;"/>
+                  </apex:panelGrid>
+             </apex:outputPanel>  
+                <apex:outputPanel >
+                  <apex:panelGrid columns="1">
+                      <apex:outputLabel value="Phone Number" style="font-family:Arial;"/>
+                      <apex:inputField value="{!leadobj.Phone}" style="width:100%;padding:3px;"/>
+                  </apex:panelGrid>
+             </apex:outputPanel>   
+                <apex:outputPanel >
+                  <apex:panelGrid columns="1">
+                      <apex:outputLabel value="Street Address" style="font-family:Arial;"/>
+                      <apex:inputField value="{!leadobj.Street__c}" style="width:300%;padding:3px;"/>
+                  </apex:panelGrid>
+             </apex:outputPanel>  
+                <apex:outputPanel >
+                  <apex:panelGrid columns="3">
+                  <apex:outputPanel >
+                  <apex:panelGrid columns="1">
+                      <apex:outputLabel value="City" style="font-family:Arial;"/>
+                      <apex:inputField value="{!leadobj.City}" style="padding:3px;"/>
+                   </apex:panelGrid>
+                  </apex:outputPanel>
+                  <apex:outputPanel >
+                   <apex:panelGrid columns="1">
+                      <apex:outputLabel value="State"  style="font-family:Arial;"/>
+                      <apex:inputField value="{!leadobj.State}" style="padding:3px;"/>
+                    </apex:panelGrid>
+                  </apex:outputPanel>
+                  <apex:outputPanel >
+                  <apex:panelGrid columns="1">
+                      <apex:outputLabel value="Postal Code" style="font-family:Arial;"/>
+                      <apex:inputField value="{!leadobj.PostalCode}" style="width:80%;padding:3px;" />
+                      </apex:panelGrid>
+                  </apex:outputPanel>
+                  </apex:panelGrid>
+          </apex:outputPanel>
+     </apex:panelGrid>
+        </td>
+        </tr></table>
+     </center><br/>  
+           <center>  <apex:commandLink value="SUBMIT" action="{!saveLead}" style="font-size:14px;font-weight:bold;padding:6px;"/>  </center>
+        <br/>  <br/>  <br/>  
+    </apex:form>
+</apex:page>

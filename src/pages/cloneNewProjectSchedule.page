@@ -1,0 +1,61 @@
+<apex:page StandardController="Project_Schedule__c" extensions="cloneNewProjectScheduleExtn" >
+ <apex:sectionHeader title="New Project Schedule" subtitle="Deep Clone"/>
+    <apex:form id="myForm">
+	<apex:pageMessages id="showmsg"/>
+		<apex:pageBlock >
+			<apex:pageBlockButtons location="both">
+				<apex:commandButton style="float:centre;width:80px;" value="Deep Clone" action="{!DeepcloneSchedule}" reRender="errormsg,showmsg"/>  
+				<apex:commandButton value="Cancel" action="{!Cancel}" immediate="true" style="width:65px" />  
+			</apex:pageBlockButtons>
+				<apex:pageBlockSection collapsible="false" title="Selected Project Schedule" columns="1">
+					<apex:pageBlockSectionItem >                        
+						<apex:outputLabel value="Clone From"/>
+					 <apex:outputText value="{!CurrentProjectSchedule.Project__r.Name}" />  
+                    </apex:pageBlockSectionItem>
+					<apex:pageBlockSectionItem >                        
+						<apex:outputLabel value="Clone To"/>
+						 <apex:outputPanel id="errormsg">
+                            <apex:outputPanel layout="block" styleClass="requiredInput" >
+                                <apex:outputpanel layout="block" styleClass="requiredBlock"/> 
+						<apex:selectList value="{!SelectedProject}" size="1"> 
+                        <apex:selectOptions value="{!availableProjects}"/>
+                        <apex:actionSupport event="onchange" action="{!errorrender}" reRender="errormsg"/> 
+                        </apex:selectList><br/>
+						 <apex:outputPanel rendered="{!IsCloneToPracticeNULL}">                                  
+                                    <apex:outputLabel value="Error: "  style="color:#C00; font-weight:bold;"/>
+                                    <apex:outputLabel value="You must select a value" style="color:#C00; "/>
+                                </apex:outputPanel>
+                                </apex:outputPanel>
+                                </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+				</apex:pageBlockSection>
+				<apex:pageBlockSection collapsible="false" title="Include Field Values" columns="2">
+				<apex:pageBlockSectionItem >                        
+						<apex:outputLabel value="Status"/>
+						<apex:inputCheckbox value="{!selectStatus}"/>
+                    </apex:pageBlockSectionItem>
+					<apex:pageBlockSectionItem >                        
+						<apex:outputLabel value="Start Date"/>
+						<apex:inputCheckbox value="{!selectStartDate}"/>
+                    </apex:pageBlockSectionItem>
+					<apex:pageBlockSectionItem >                        
+						<apex:outputLabel value="Owner"/>
+						<apex:inputCheckbox value="{!selectOwner}"/>
+                    </apex:pageBlockSectionItem>
+					<apex:pageBlockSectionItem >                        
+						<apex:outputLabel value="Due Date"/>
+						<apex:inputCheckbox value="{!selectDueDate}"/>
+                    </apex:pageBlockSectionItem>
+					<apex:pageBlockSectionItem >                        
+						<apex:outputLabel value="Sort Order"/>
+						<apex:inputCheckbox value="{!selectSortOrder}"/>
+                    </apex:pageBlockSectionItem>
+					<apex:pageBlockSectionItem >                        
+						<apex:outputLabel value="Completed Date"/>
+						<apex:inputCheckbox value="{!selectActualDate}"/>
+                    </apex:pageBlockSectionItem>
+					
+				</apex:pageBlockSection>
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>

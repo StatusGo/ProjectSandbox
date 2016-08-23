@@ -1,0 +1,44 @@
+<!-- ProjectActionItemsFollowup -->
+<apex:page controller="ProjectReportEmailControllerdata" contentType="text/html">
+<apex:form >
+ <apex:pageblock >
+    <div style="width:100%;padding-bottom:15px;"> 
+                <div align="left">  
+                    <apex:image url="{!imageURL}" width="275" height="60"/>
+                </div>      
+            </div>
+                <table border="0" width="100%" escape="false" >
+                        <tr>
+                            <td style="padding-bottom:3px;">
+                                <b>Project Manager: </b> <apex:outputLabel value="{!projectManagerName}" rendered="{!if(projectManagerName != null,true,false)}"/>
+                            </td>
+                        </tr>                   
+                        <tr>
+                            <td style="padding-bottom:3px;">
+                                <apex:outputLabel value="{!noteBody}" rendered="{!if(noteBody != null,true,false)}"/>
+                            </td>
+                        </tr>                                                                     
+                        <tr>
+                            <td style="padding-bottom:7px;"><b>Action Items</b></td>
+                        </tr>  
+                </table>
+            
+                <apex:pageBlockTable value="{!ActionItem}" var="item" border="1" style="width:100%;">
+                    <apex:column headerValue="Status"> 
+                        <apex:outputLabel value="{!item.Status__c}" style="padding:3px;"/>
+                    </apex:column>
+                    <apex:column headerValue="Owner" > 
+                        <apex:outputLabel value="{!item.Owner__r.Name}"  style="padding:3px;"/>
+                    </apex:column>
+                    <apex:column headerValue="Description" > 
+                        <apex:outputLabel value="{!item.Action_Description__c}" escape="false"  style="padding:3px;"/>
+                    </apex:column>
+                    <apex:column headerValue="Commit Date" > 
+                        <apex:outputText value="{0,date,MM/dd/yyyy}" style="padding:3px;">
+                            <apex:param value="{!item.Commit_Date__c}" />
+                        </apex:outputText>
+                    </apex:column>
+                </apex:pageBlockTable>
+    </apex:pageblock>           
+  </apex:form>                       
+</apex:page>

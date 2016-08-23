@@ -1,0 +1,51 @@
+<apex:component controller="projectEmailTemplateExtn" access="global">
+    <apex:attribute name="statusRep" type="Id" description="Id of the Project_Working_Session" assignTo="{!statusRepID}"/>
+            <div style="width:100%;padding-bottom:15px;"> 
+                <div align="left">  
+                    <apex:image url="{!imageURL}" width="275" height="60"/>
+                </div>      
+            </div>
+            <apex:repeat value="{!listProject}" var="proj" >
+                <table border="0" width="100%" escape="false" >
+                        <tr>
+                            <td style="padding-bottom:3px;">
+                                <b>Project Manager: </b> <apex:outputLabel value="{!proj.Project_Manager__r.Name}" rendered="{!if(proj.Project_Manager__r.Name != null,true,false)}"/>
+                            </td>
+                        </tr>                   
+                        
+                                             
+                        <tr>
+                            <td style="padding-bottom:7px;"><b>Action Items:</b></td>
+                        </tr>                      
+                        <tr>
+                            <td>                            
+                                <table border = "1"  style="border-collapse:collapse; padding:5px; text-align:left; width:100%;" >
+                                    <col width="15%"/>
+                                    <col width="20%"/>  
+                                    <col width="45%"/>  
+                                    <col width="20%"/>  
+                                    <tr>
+                                        <th style="padding-left:5px;">Status</th>
+                                        <th style="padding-left:5px;">Owner</th>      
+                                        <th style="padding-left:5px;">Description</th>
+                                        <th style="padding-left:5px;">Commit Date</th>
+                                    </tr>
+                                    <apex:repeat value="{!ActionItem}" var="item">
+                                    <tr>
+                                        <td style="padding-left:5px;">{!item.Status__c}</td>
+                                        <td style="padding-left:5px;">{!item.Owner__r.Name}</td>              
+                                        <td style="padding-left:5px;"><apex:outputLabel value="{!item.Action_Description__c}" escape="false" /></td>                           
+                                        <td style="padding-left:5px;">
+                                        <apex:outputText value="{0,date,MM/dd/yyyy}">
+                                        <apex:param value="{!item.Commit_Date__c}" />
+                                        </apex:outputText>
+                                        </td>             
+                                    </tr>
+                                    </apex:repeat>        
+                                </table>                                                        
+                            </td>
+                        </tr>                      
+                                          
+                </table>
+            </apex:repeat>
+</apex:component>

@@ -1,0 +1,168 @@
+<!-- SendEmailVFPage -->
+<apex:page Controller="ProjectReportEmailController"   tabstyle="Project__c">
+<apex:sectionheader title="SG Project" subtitle="{!projectName}"/>
+<apex:form id="myForm">
+    <apex:outputPanel id="ErrorRen">
+        <apex:pageMessages />
+    </apex:outputPanel>
+    <apex:pageBlock id="pgBlock1" mode="edit" title="Edit email">
+        <apex:pageBlockButtons >
+            <apex:commandButton value="Send Email" style="width:78px" action="{!sendEmail}" rerender="ErrorRen,TextmessageSend"  />
+            <apex:commandButton value="Cancel" immediate="true" action="{!cancel}" style="width:60px" />
+
+                        <apex:outputPanel id="TextmessageSend">
+                            <apex:outputPanel rendered="{!if(returnString != null,true,false)}"> 
+                                <script language="javascript">
+                                    var error = '{!returnString}';
+                                    alert(error);
+                                     
+                                    window.open('/{!projectId}','_self');
+                                </script>
+                            </apex:outputPanel>         
+                        </apex:outputPanel>            
+        </apex:pageBlockButtons>
+
+        <apex:pageBlocksection id="txtrea2"> 
+            <apex:pageBlockSectionItem >
+                <apex:outputLabel value="To:"/> 
+                    <apex:outputPanel layout="block" styleClass="requiredInput">
+                    <apex:outputpanel layout="block" styleClass="requiredBlock"/>
+                        <apex:inputtextarea label="Additional Email:" html-placeholder="Enter additional email address" Style="height:53px;width:285px; " value="{!message}"/>
+                            <apex:commandButton id="lookupbtn2" style="background-image:url({!URLFOR("https://ap2.salesforce.com/img/func_icons/util/lookup20.gif")});height:20px;width:21px;border-width:0px;background-repeat:no-repeat;margin-left: 5px;cursor:pointer;vertical-align: top;" action="{!showPopupto}" rerender="tstpopup"/>
+                    </apex:outputPanel>
+            </apex:pageBlockSectionItem>
+        </apex:pageBlocksection> 
+                 
+         
+        <apex:pageBlocksection id="txtreaCc"> 
+            <apex:pageBlockSectionItem >
+                <apex:outputLabel value="CC:"/> 
+                    <apex:outputPanel >
+                        <apex:inputtextarea html-placeholder="Enter email address to CC" Style="height:53px;width:285px;" value="{!messageCC}"/>
+                        <apex:commandButton id="lookupbtn3" style="background-image:url({!URLFOR("https://ap2.salesforce.com/img/func_icons/util/lookup20.gif")});height:20px;width:21px;border-width:0px;background-repeat:no-repeat;margin-left: 5px;cursor:pointer;vertical-align: top;" action="{!showPopupcc}" rerender="tstpopup2"/>
+                    </apex:outputPanel>
+            </apex:pageBlockSectionItem>
+        </apex:pageBlocksection>
+
+        <apex:pageBlocksection id="txtareanote"> 
+            <apex:pageBlockSectionItem >
+                <apex:outputLabel value="Note:"/> 
+                    <apex:outputPanel >
+                        <apex:inputtextarea html-placeholder="Enter a note for E-mail" Style="height:53px;width:285px;" value="{!noteBody}"/>
+                    </apex:outputPanel>
+            </apex:pageBlockSectionItem>
+        </apex:pageBlocksection>
+ 
+        <apex:outputpanel layout="block" >
+            <br/><br/><br/>
+            <apex:outputLabel value="Action Items are not available" style="font-size:14px; margin-left:166px;color:red;" rendered="{!if(wrpList.size>0,false,true)}"/> 
+        </apex:outputpanel>
+        
+        <apex:outputpanel style="overflow:scroll;height:200px;width:900px;margin-left:100px;margin-right:95px;" layout="block" rendered="{!if(wrpList.size>0,true,false)}">
+            <apex:pageBlockTable align="center" value="{!wrpList}" var="wrap" id="table" title="All Action Items" border="1" >
+                    <apex:column headerValue="Select" style="width:40px">
+                        <apex:inputCheckbox value="{!wrap.selected}" id="inputId" />
+                    </apex:column>              
+                    <apex:column headerValue="Status" style="width:80px;"> 
+                    <apex:outputLabel value="{!wrap.Statusc}"/>
+                    </apex:column>
+                    <apex:column headerValue="Owner" > 
+                    <apex:outputLabel value="{!wrap.ownerName}" style="width:120px;"/>
+                    </apex:column>
+                    <apex:column headerValue="Description" > 
+                    <apex:outputLabel value="{!wrap.ActionDescription}" escape="false"/>
+                    </apex:column>
+                    <apex:column headerValue="Commit Date" > 
+                    <apex:outputText value="{0,date,MM/dd/yyyy}">
+                        <apex:param value="{!wrap.CommitDate}" />
+                         </apex:outputText>
+                    </apex:column>
+            </apex:pageBlockTable>
+        </apex:outputpanel>
+        
+        
+        <!--*******************This is the popup window*******************-->
+        <apex:outputPanel id="tstpopup">
+        <apex:outputPanel styleClass="popupBackground" rendered="{!displayPopUp}"/>         
+        <apex:outputPanel styleClass="custPopup" layout="block" rendered="{!displayPopUp}">
+            <apex:pageBlock title="Select Additional Contacts" dir="2">
+                    <apex:inputText value="{!searchStrTO}" style="width:150px;"/>
+                    <apex:commandButton value="Search" action="{!srchContact1}" reRender="cont1" status="actStatusId"/>
+                <apex:outputPanel id="cont1">
+                <c:MultiselectPicklist leftLabel="Available Contacts"
+                    leftOptions1="{!allContacts}"
+                    rightLabel="Selected Contacts"
+                    rightOptions1="{!selectedContacts}"
+                    size="14"
+                    width="150px"/>
+                </apex:outputPanel> 
+                <apex:pageBlockButtons >
+                    <apex:commandButton value="Add" action="{!saveNclosePopupTO}" rerender="tstpopup,txtrea2"/>
+                    <apex:commandButton value="Cancel" action="{!cancelPopup}" rerender="tstpopup,txtrea2"/>
+                </apex:pageBlockButtons>
+            </apex:pageBlock>
+        </apex:outputPanel>
+    </apex:outputPanel>
+    
+    <apex:outputPanel id="tstpopup2">
+        <apex:outputPanel styleClass="popupBackground" rendered="{!displayPopUp}"/> 
+            <apex:outputPanel styleClass="custPopup" layout="block" rendered="{!displayPopUp}">
+                <apex:pageBlock title="Select Contacts for CC" dir="2">
+                    <apex:inputText value="{!searchStr}" style="width:150px;"/>
+                    <apex:commandButton value="Search" action="{!srchContact}" reRender="cont" status="actStatusId"/>   
+                        <apex:outputPanel id="cont">    
+                            <c:MultiselectPicklist leftLabel="Available Contacts"
+                            leftOptions1="{!allContactsCC}"
+                            rightLabel="Selected Contacts"
+                            rightOptions1="{!selectedContactsCC}"
+                            size="14"
+                            width="150px"/>
+                        </apex:outputPanel> 
+                    <apex:pageBlockButtons >
+                        <apex:commandButton value="Add" action="{!saveNclosePopupCc}" rerender="tstpopup2,txtreaCc"/>
+                        <apex:commandButton value="Cancel" action="{!cancelPopup}" rerender="tstpopup2,txtreaCc"/>
+                    </apex:pageBlockButtons>
+                </apex:pageBlock>
+            </apex:outputPanel>
+    </apex:outputPanel>
+
+    
+    
+    
+    </apex:pageBlock>
+
+</apex:form>
+    
+    
+    
+        <style type="text/css">
+        .custPopup{
+            background-color: white;
+            border-width: 2px;
+            border-style: solid;
+            z-index: 9999;
+            left: 50%;
+            padding:10px;
+            position: absolute;
+            /* These are the 3 css properties you will need to change so the popup 
+            displays in the center of the screen. First set the width. Then set 
+            margin-left to negative half of what the width is. You can add 
+            the height property for a fixed size pop up if you want.*/
+            width: 500px;
+            margin-left: -250px;
+            top:40px;
+        }
+        .popupBackground{
+            background-color:black;
+            opacity: 0.20;
+            filter: alpha(opacity = 20);
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 9998;
+        }
+
+        </style>
+</apex:page>

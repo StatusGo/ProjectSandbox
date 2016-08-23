@@ -1,0 +1,16 @@
+{
+    "projectName": "ProjectSandbox",
+    "username": "lonniecomer@statusgonow.com.project",
+    "id": "416e0f30-6979-11e6-bffb-85f3947d5912",
+    "namespace": "",
+    "environment": "sandbox",
+    "loginUrl": "https://test.salesforce.com/",
+    "workspace": "/Users/llc/Documents/Projects",
+    "subscription": [
+        "ApexClass",
+        "ApexComponent",
+        "ApexPage",
+        "ApexTrigger",
+        "StaticResource"
+    ]
+}

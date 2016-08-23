@@ -1,0 +1,99 @@
+<apex:page controller="projWorkingSessionExtn" contentType="text/html">
+<apex:form >
+              <div style="width:100%;padding-bottom:15px;"> 
+                <div align="left">  
+                    <apex:image url="{!imageURL}" width="275" height="60"/>
+                </div>      
+            </div>
+            <apex:repeat value="{!listWorkingSessionReport}" var="Working_Session" >
+                <table border="0" width="100%" escape="false" >
+                        <tr>
+                            <td style="padding-bottom:3px;">
+                                <b>Project Manager: </b> <apex:outputLabel value="{!Working_Session.Project__r.Project_Manager__r.Name}" rendered="{!if(Working_Session.Project__r.Project_Manager__r.Name != null,true,false)}"/>
+                            </td>
+                        </tr>                   
+                        <tr>
+                            <td style="padding-bottom:15px;">
+                                <b>Working Session Date: </b>
+                                <apex:outputLabel rendered="{!if(Working_Session.Date__c != null,true,false)}">
+                                    <apex:outputText value="{0,date,MM/dd/yyyy}">
+                                        <apex:param value="{!Working_Session.Date__c}" />
+                                    </apex:outputText>
+                                </apex:outputLabel>                                
+                            </td>
+                        </tr>
+                        <tr>                    
+                            <td style="padding-top:18px;padding-bottom:15px;"><b>Participants:</b></td>
+                        </tr>
+                        <tr></tr>                       
+                        <tr>
+                            <td style="padding-bottom:10px;">
+                                <apex:outputLabel value="{!Working_Session.Participants__c}" rendered="{!if(Working_Session.Participants__c != null,true,false)}" escape="false"/>
+                            </td>           
+                        </tr>
+                        <apex:outputPanel rendered="{!if(Working_Session.Notes__c != null,true,false)}" >
+                       
+                        <tr>
+                            <td style="padding-bottom:15px;">
+                                <apex:outputLabel value="{!Working_Session.Notes__c}" escape="false"/>
+                            </td>
+                        </tr> 
+                        </apex:outputPanel>                     
+                        <tr>                    
+                            <td style="padding-top:17px;padding-bottom:15px;"><b>Summary:</b></td>
+                        </tr>                     
+                        <tr>
+                            <td style="padding-bottom:10px;">
+                                <apex:outputLabel value="{!Working_Session.Summary__c}" rendered="{!if(Working_Session.Summary__c != null,true,false)}" escape="false"/>
+                            </td>           
+                        </tr>                      
+                        <tr>
+                            <td style="padding-bottom:7px;"><b>Action Items:</b></td>
+                        </tr> 
+                        <apex:outputPanel rendered="{!if(ActionItem.size == 0,false,true)}">                        
+                        <tr>
+                            <td>                            
+                                <table border = "1"  style="border-collapse:collapse; padding:5px; text-align:left; width:100%;" >
+                                    <col width="15%"/>
+                                    <col width="20%"/>  
+                                    <col width="45%"/>  
+                                    <col width="20%"/>  
+                                    <tr>
+                                        <th style="padding-left:5px;">Status</th>
+                                        <th style="padding-left:5px;">Owner</th>      
+                                        <th style="padding-left:5px;">Description</th>
+                                        <th style="padding-left:5px;">Commit Date</th>
+                                    </tr>
+                                    <apex:repeat value="{!ActionItem}" var="item">
+                                    <tr>
+                                        <td style="padding-left:5px;">{!item.Status__c}</td>
+                                        <td style="padding-left:5px;">{!item.Owner__r.Name}</td>              
+                                        <td style="padding-left:5px;"><apex:outputLabel value="{!item.Action_Description__c}" escape="false" /></td>                           
+                                        <td style="padding-left:5px;">
+                                        <apex:outputText value="{0,date,MM/dd/yyyy}">
+                                        <apex:param value="{!item.Commit_Date__c}" />
+                                        </apex:outputText>
+                                        </td>             
+                                    </tr>
+                                    </apex:repeat>        
+                                </table>                                                        
+                            </td>
+                        </tr>
+                        </apex:outputPanel> 
+                        <apex:outputPanel rendered="{!if(ActionItem.size == 0,true,false)}">
+                            <tr><td>
+                            There are currently no Action Items 
+                            </td></tr>
+                        </apex:outputPanel>                 
+                        <tr>                    
+                            <td style="padding-top:18px;padding-bottom:15px;"><b>Next Steps:</b></td>
+                        </tr>                       
+                        <tr>
+                            <td style="padding-bottom:10px;">
+                                <apex:outputLabel value="{!Working_Session.Next_Steps__c}" rendered="{!if(Working_Session.Next_Steps__c != null,true,false)}" escape="false"/>
+                            </td>           
+                        </tr>                   
+                </table>
+            </apex:repeat>
+</apex:form>
+</apex:page>

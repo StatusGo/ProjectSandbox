@@ -1,0 +1,4 @@
+<!-- OpptyEnhancedNoteEmailPage -->
+<apex:page Controller="OpptyEnhancedNoteEmailController"   tabstyle="Inspection_Guide_Entry__c">
+
+</apex:page>
